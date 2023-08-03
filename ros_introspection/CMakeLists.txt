@@ -1,16 +1,15 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.5)
 project(ros_introspection)
 
-find_package(catkin REQUIRED COMPONENTS rosmsg)
-catkin_python_setup()
+find_package(ament_cmake REQUIRED)
 
-catkin_package(
-    CATKIN_DEPENDS rosmsg
-)
-
-if (CATKIN_ENABLE_TESTING)
-  find_package(catkin REQUIRED COMPONENTS roslint)
-  roslint_python()
-  roslint_add_test()
+if (BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
 endif()
-catkin_install_python(PROGRAMS scripts/print_packages.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+install(PROGRAMS
+        scripts/print_packages.py
+        DESTINATION lib/${PROJECT_NAME})
+
+ament_package()
